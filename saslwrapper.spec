@@ -1,7 +1,6 @@
 #
 # Conditional build:
 %bcond_without	tests		# build without tests
-%bcond_without	doc			# don't build doc
 %bcond_without	ruby		# Ruby binding
 %bcond_without	python		# Python binding
 
@@ -19,25 +18,26 @@ URL:		http://qpid.apache.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cyrus-sasl-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	swig
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-# ./configure checks for these, even though it probably needn't
-BuildRequires:	/usr/bin/python
-BuildRequires:	/usr/bin/ruby
 %if %{with python}
 BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
+BuildRequires:	swig-python
+# ./configure checks for these, even though it probably needn't
+BuildRequires:	/usr/bin/python
 %endif
 %if %{with ruby}
 BuildRequires:	rpm-rubyprov
 BuildRequires:	ruby-devel
-%endif
-%if %{with doc}
-BuildRequires:	doxygen
+BuildRequires:	swig-ruby
+# ./configure checks for these, even though it probably needn't
+BuildRequires:	/usr/bin/ruby
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -97,6 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libsaslwrapper.la
 %{?with_python:%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/_saslwrapper.la}
+%{?with_ruby:%{__rm} $RPM_BUILD_ROOT%{ruby_vendorarchdir}/saslwrapper.la}
 
 %py_postclean
 
