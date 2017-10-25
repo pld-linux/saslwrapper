@@ -7,7 +7,7 @@
 Summary:	Ruby and Python wrappers for the Cyrus SASL library
 Name:		saslwrapper
 Version:	0.16
-Release:	4
+Release:	5
 License:	Apache v2.0
 Group:		Libraries
 # svn export -r 1346225 https://svn.apache.org/repos/asf/qpid/tags/0.16/qpid/extras/sasl saslwrapper-0.16
