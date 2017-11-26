@@ -7,13 +7,14 @@
 Summary:	Ruby and Python wrappers for the Cyrus SASL library
 Name:		saslwrapper
 Version:	0.16
-Release:	5
+Release:	6
 License:	Apache v2.0
 Group:		Libraries
 # svn export -r 1346225 https://svn.apache.org/repos/asf/qpid/tags/0.16/qpid/extras/sasl saslwrapper-0.16
 # tar -cJf saslwrapper-0.16.tar.xz saslwrapper-0.16
 Source0:	http://pkgs.fedoraproject.org/repo/pkgs/saslwrapper/%{name}-%{version}.tar.xz/e801d697a196647938eb1521be414090/saslwrapper-%{version}.tar.xz
 # Source0-md5:	e801d697a196647938eb1521be414090
+Patch0:		ruby-config.patch
 URL:		http://qpid.apache.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -74,6 +75,7 @@ Ruby bindings for the saslwrapper library.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal} -I m4

@@ -1,0 +1,44 @@
+--- saslwrapper-0.16/configure.ac~	2011-12-07 21:08:19.000000000 +0100
++++ saslwrapper-0.16/configure.ac	2017-11-26 12:10:02.436698127 +0100
+@@ -168,13 +168,13 @@
+ if test -n "$RUBY" ; then
+    AC_ARG_VAR(RUBY_INC, [Directory where ruby.h can be found])
+    if test -z "$RUBY_INC" ; then
+-      [RUBY_INC=`$RUBY -rrbconfig -e 'puts Config::CONFIG["rubyhdrdir"] || Config::CONFIG["archdir"]'`]
++      [RUBY_INC=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG["rubyhdrdir"] || RbConfig::CONFIG["archdir"]'`]
+    fi
+    AC_SUBST(RUBY_INC)
+ 
+    AC_ARG_VAR(RUBY_INC_ARCH, [Directory where ruby/config.h can be found (needed from Ruby 1.9)])
+    if test -z "$RUBY_INC_ARCH" ; then
+-      [RUBY_INC_ARCH=`$RUBY -rrbconfig -e 'd = Config::CONFIG["rubyhdrdir"];if d != nil; print d + "/" + Config::CONFIG["arch"]; end'`]
++      [RUBY_INC_ARCH=`$RUBY -rrbconfig -e 'd = RbConfig::CONFIG["rubyhdrdir"];if d != nil; print d + "/" + RbConfig::CONFIG["arch"]; end'`]
+       dnl For earlier versions, just make it the same as RUBY_INC.
+       test x"$RUBY_INC_ARCH" != x || RUBY_INC_ARCH=$RUBY_INC
+    fi
+@@ -182,14 +182,14 @@
+    AC_ARG_VAR(RUBY_LIB, [Directory to install ruby files into])
+       if test -z "$RUBY_LIB" ; then
+       dnl Kludge to install ruby files under $prefix
+-      [RUBY_LIB=`$RUBY -rrbconfig -e 'puts Config::CONFIG["sitelibdir"].gsub("/usr", "${prefix}")'`]
++      [RUBY_LIB=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"].gsub("/usr", "${prefix}")'`]
+    fi
+    AC_SUBST(RUBY_LIB)
+ 
+ 	AC_ARG_VAR(RUBY_LIB_ARCH, [Directory to install ruby binary modules into])
+ 	if test -z "$RUBY_LIB_ARCH" ; then
+       dnl Kludge to install ruby files under $prefix
+-	  [RUBY_LIB_ARCH=`$RUBY -rrbconfig -e 'puts Config::CONFIG["sitearchdir"].gsub("/usr", "${prefix}")'`]
++	  [RUBY_LIB_ARCH=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG["sitearchdir"].gsub("/usr", "${prefix}")'`]
+ 	fi
+ 	AC_SUBST(RUBY_LIB_ARCH)
+ 
+@@ -199,7 +199,7 @@
+ 	esac
+ 	AC_SUBST(RUBY_LIBS)
+ 
+-   RUBY_DLEXT=`$RUBY -rrbconfig -e 'puts Config::CONFIG[["DLEXT"]]'`
++   RUBY_DLEXT=`$RUBY -rrbconfig -e 'puts RbConfig::CONFIG[["DLEXT"]]'`
+    AC_SUBST(RUBY_DLEXT)
+ fi
+ AM_CONDITIONAL([HAVE_RUBY_DEVEL], [test -f $RUBY_INC/ruby.h && test -n "$SWIG"])
